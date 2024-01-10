@@ -184,6 +184,32 @@ class Truck:
     def __str__(self):
         return "%s,%s,%s,%s,%s,%s" % (self.truckSpeed, self.truckMiles, self.truckLocation, self.truckTime, self.truckLeavingTime, self.packages)
 
+# Determines the minimum distance to the upcoming address.
+
+def minimumAddress(address):
+    for row in addressReader:
+        if address in row[2]:
+           return int(row[0])
+
+# Calculates the distance separating two addresses.
+
+def betweenAddresses(address1, address2):
+    distance = distanceReader[address1][address2]
+    if distance == '':
+        distance = distanceReader[address2][address1]
+    return float(distance)
+
+# The function retrieves data from a CSV file.
+
+loadingPackageData('package.csv')
+
+# Loading the trucks manually and assigning them a departure time.
+
+truckFirst = Truck(18, 0.0, "4001 South 700 East", datetime.timedelta(hours = 8),[1,13,14,15,16,19,20,27,29,30,31,34,37,40])
+truckSecond = Truck(18, 0.0, "4001 South 700 East", datetime.timedelta(hours = 11),[2,3,4,5,9,18,26,28,32,35,36,38])
+truckThird = Truck(18, 0.0, "4001 South 700 East", datetime.timedelta(hours = 9, minutes = 5),[6,7,8,10,11,12,17,21,22,23,24,25,33,39])
+
+
 ### Nearest Neighbor
 
 # Package Delivery Algorithm for the Truck
