@@ -186,6 +186,45 @@ class Truck:
 
 ### Nearest Neighbor
 
+# Package Delivery Algorithm for the Truck
+
+def truckDeliverThePackages(truck):
+    print("Truck Object Instance Initialized")
+
+    # Generates an array containing all the packages slated for delivery.
+
+    deliveryArray = []
+
+    # Stores packages from the hash table into the deliveryArray array.
+
+    for packageID in truck.packages:
+        package = packageHashTable.retrieve(packageID)
+        deliveryArray.append(package)
+
+    truck.packages.clear()
+
+    # The algorithm will continue running as long as there are packages yet to be delivered.
+
+    while len(deliveryArray) > 0:
+        upcomingAddress = 2000
+        upcomingPackage = None
+        for package in deliveryArray:
+            if package.ID in [25, 6]:
+                upcomingPackage = package
+                upcomingAddress = betweenAddresses(minimumAddress(truck.truckLocation), minimumAddress(package.packageStreet))
+                break
+            if betweenAddresses(minimumAddress(truck.truckLocation), minimumAddress(package.packageStreet)) <= upcomingAddress:
+                upcomingAddress = betweenAddresses(minimumAddress(truck.truckLocation), minimumAddress(package.packageStreet))
+                upcomingPackage = package
+        truck.packages.append(upcomingPackage.ID)    
+        deliveryArray.remove(upcomingPackage)
+        truck.truckMiles += upcomingAddress
+        truck.truckLocation = upcomingPackage.packageStreet
+        truck.truckTime += datetime.timedelta(hours = upcomingAddress / 18)
+        upcomingPackage.packageDeliveryTime = truck.truckTime
+        upcomingPackage.packageDepartureTime = truck.truckLeavingTime
+         
+
 
 
 ### User Interface
