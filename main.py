@@ -98,7 +98,17 @@ class HashTable:
 
 ### Truck Class
 
+class Truck:
+    def __init__(self, truckSpeed, truckMiles, truckLocation, truckLeavingTime, packages):
+        self.truckSpeed = truckSpeed
+        self.truckMiles = truckMiles
+        self.truckLocation = truckLocation
+        self.truckTime = truckLeavingTime
+        self.truckLeavingTime = truckLeavingTime
+        self.packages = packages
 
+    def __str__(self):
+        return "%s,%s,%s,%s,%s,%s" % (self.truckSpeed, self.truckMiles, self.truckLocation, self.truckTime, self.truckLeavingTime, self.packages)
 
 ### Nearest Neighbor
 
