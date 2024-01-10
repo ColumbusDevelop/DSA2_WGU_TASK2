@@ -94,7 +94,43 @@ class HashTable:
 
 ### Package Class
 
+# Where the information regarding the criteria for the package is stored.
+ 
+class Packages:
+    def __init__(self, ID, packageStreet, packageCity, packageState, packageZip, packageDeadline, packageWeight, packageNotes, packageStatus, packageDepartureTime, packageDeliveryTime):
+        self.ID = ID
+        self.packageStreet = packageStreet
+        self.packageCity = packageCity
+        self.packageState = packageState
+        self.packageZip = packageZip
+        self.packageDeadline = packageDeadline
+        self.packageWeight = packageWeight
+        self.packageNotes = packageNotes
+        self.packageStatus = packageStatus
+        self.packageDepartureTime = None # packageDepartureTime
+        self.packageDeliveryTime = None # packageDeliveryTime
 
+    def __str__(self):
+        return "ID: %s, %-20s, %s, %s,%s, Package Deadline: %s,%s,%s,Package Departure Time: %s,Package Delivery Time: %s" % (self.ID, self.packageStreet, self.packageCity, self.packageState, self.packageZip, self.packageDeadline, self.packageWeight, self.packageStatus, self.packageDepartureTime, self.packageDeliveryTime)
+
+    # The status of a package will be updated based on the entered time using this method.
+
+    def changeStatus(self, timeDiff):
+        if self.packageDeliveryTime == None:
+            self.packageStatus = "Package Location: The Hub"
+        elif timeDiff < self.packageDepartureTime:
+            self.packageStatus = "Package Location: The Hub"   
+        elif timeDiff < self.packageDeliveryTime:
+            self.packageStatus = "Package Location: En Route"     
+        else:
+            self.packageStatus = "Package Location: Delivered" 
+        if self.ID == 9:          # Once the package for item 9 is received, the address will be updated to the correct one.
+            if timeDiff > datetime.timedelta (hours = 10, minutes = 20):
+                self.packageStreet = "410 S State St"  
+                self.packageZip = "84111"  
+            else:
+                self.packageStreet = "300 State St"
+                self.packageZip = "84103"     
 
 ### Truck Class
 
