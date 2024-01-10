@@ -10,6 +10,9 @@
 ### Drivers leave the hub no earlier than 8:00 a.m
 ### The delivery address for package #9, Third District Juvenile Court, is wrong and will be corrected at 10:20 a.m. WGUPS is aware that the address is incorrect and will be updated at 10:20 a.m. However, WGUPS does not know the correct address (410 S. State St., Salt Lake City, UT 84111) until 10:20 a.m.
 
+### 40 packages for two of the trucks
+### Under 140 miles
+
 ### Importing From Python Standard Library
 
 # Import the datetime module for working with dates and times
@@ -32,7 +35,7 @@ with open("address.csv") as addressFile:
 
 with open("distance.csv") as distanceFile:
     distanceReader = csv.reader(distanceFile)
-    distanceReader = list(distanceReader) 
+    distanceReader = list(distanceReader)   
 
 ### Hash Table Class
 
@@ -169,6 +172,7 @@ def loadingPackageData(filename):
 
 packageHashTable = HashTable() 
 
+# Creating a Truck: Necessary Requirements
 
 ### Truck Class
 
@@ -209,7 +213,6 @@ truckFirst = Truck(18, 0.0, "4001 South 700 East", datetime.timedelta(hours = 8)
 truckSecond = Truck(18, 0.0, "4001 South 700 East", datetime.timedelta(hours = 11),[2,3,4,5,9,18,26,28,32,35,36,38])
 truckThird = Truck(18, 0.0, "4001 South 700 East", datetime.timedelta(hours = 9, minutes = 5),[6,7,8,10,11,12,17,21,22,23,24,25,33,39])
 
-
 ### Nearest Neighbor
 
 # Package Delivery Algorithm for the Truck
@@ -249,9 +252,24 @@ def truckDeliverThePackages(truck):
         truck.truckTime += datetime.timedelta(hours = upcomingAddress / 18)
         upcomingPackage.packageDeliveryTime = truck.truckTime
         upcomingPackage.packageDepartureTime = truck.truckLeavingTime
-         
+            
+# Initiates the departure of trucks for package delivery.
 
+truckDeliverThePackages(truckFirst)
+truckDeliverThePackages(truckThird)
 
+# Truck 2 will remain until either Truck 1 or Truck 2 returns.
+
+truckSecond.truckLeavingTime = min(truckFirst.truckTime, truckThird.truckTime)
+truckDeliverThePackages(truckSecond)
+
+# WGUPS
+
+print("WGUPS")
+
+# The combined mileage of all the trucks.
+
+print ("The total miles driven by all the trucks is:", (truckFirst.truckMiles + truckSecond.truckMiles + truckThird.truckMiles))
 
 ### User Interface
 
@@ -271,5 +289,5 @@ while True:
     for packageID in packageEntry:
         package = packageHashTable.retrieve(packageID)
         package.changeStatus(timeDiff)
-        print(str(package))        
+        print(str(package))                    
 
