@@ -229,5 +229,21 @@ def truckDeliverThePackages(truck):
 
 ### User Interface
 
+# 1. Provide screenshots to show the status of all packages loaded onto each truck at a time between 8:35 a.m. and 9:25 a.m.
+# 2. Provide screenshots to show the status of all packages loaded onto each truck at a time between 9:35 a.m. and 10:25 a.m.
+# 3. Provide screenshots to show the status of all packages loaded onto each truck at a time between 12:03 p.m. and 1:12 p.m.
 
+while True:
+
+    inputTime = input("Kindly input the desired time to view the status of each package. Use the format HH:MM.")
+    (h, m) = inputTime.split(":")
+    timeDiff = datetime.timedelta(hours = int(h), minutes = int(m))
+    try:
+        packageEntry = [int(input("Input the desired Package ID or input nothing to see all package statuses."))]
+    except ValueError:
+        packageEntry =  range(1, 41)
+    for packageID in packageEntry:
+        package = packageHashTable.retrieve(packageID)
+        package.changeStatus(timeDiff)
+        print(str(package))        
 
