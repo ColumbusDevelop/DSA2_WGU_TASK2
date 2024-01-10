@@ -132,6 +132,44 @@ class Packages:
                 self.packageStreet = "300 State St"
                 self.packageZip = "84103"     
 
+    # Generating packages containing information from the CSV to be inserted into the Hash Table.
+
+def loadingPackageData(filename):
+    with open(filename) as packageFile:
+        packageReader = csv.reader(packageFile, delimiter = ',')
+        next (packageReader)
+        for package in packageReader:
+            packageInstanceID = int(package[0])
+
+            packageInstanceStreet = package[1]
+
+            packageInstanceCity = package[2]
+
+            packageInstanceState = package[3]
+
+            packageInstanceZip = package[4]
+
+            packageInstanceDeadline = package[5]
+
+            packageInstanceWeight = package[6]
+
+            packageInstanceNotes = package[7]
+
+            packageInstanceStatus = "Package Location: The Hub"
+            packageInstanceDepartureTime = None
+            packageInstanceDeliveryTime = None
+
+            # Incorporating package information into the hash table.
+
+            packageInstance = Packages(packageInstanceID, packageInstanceStreet, packageInstanceCity, packageInstanceState, packageInstanceZip, packageInstanceDeadline, packageInstanceWeight, packageInstanceNotes, packageInstanceStatus, packageInstanceDepartureTime, packageInstanceDeliveryTime)
+
+            packageHashTable.add(packageInstanceID, packageInstance)
+
+# Package Hash Table
+
+packageHashTable = HashTable() 
+
+
 ### Truck Class
 
 class Truck:
